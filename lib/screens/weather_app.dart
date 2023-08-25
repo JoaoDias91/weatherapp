@@ -60,6 +60,7 @@ class _WeatherAppState extends State<WeatherApp> {
                           setState(() {
                           futurePosition?.then((value) {
                             content = "${value.latitude} ${value.longitude}";
+                            debugPrint(content);
                           });
                         });
                         }else{
@@ -76,7 +77,7 @@ class _WeatherAppState extends State<WeatherApp> {
                 final String label = tab.text!.toLowerCase();
                 return Center(
                   child: Text(
-                    serviceEnabled? '$label\n$content' : content,
+                    serviceEnabled? '$label\n$content' : label,
                     style: const TextStyle(fontSize: 36),
                   ),
                 );
