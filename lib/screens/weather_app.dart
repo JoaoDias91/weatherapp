@@ -30,7 +30,15 @@ class _WeatherAppState extends State<WeatherApp> {
   void initState() {
     serviceEnabledFuture = geolocation.geolocationServiceEnabled();
     serviceEnabledFuture?.then((value) => serviceEnabled = value);
+    futurePosition = geolocation.getUserPosition();
     super.initState();
+  }
+
+  void getUserPosition(){
+    futurePosition?.then((value) {
+          content = "${value.latitude} ${value.longitude}";
+      debugPrint(content);
+    });
   }
   
   
@@ -56,14 +64,10 @@ class _WeatherAppState extends State<WeatherApp> {
                 IconButton(
                     onPressed: () {
                         if(serviceEnabled){
-                          futurePosition = geolocation.getUserPosition();
                           setState(() {
-                          futurePosition?.then((value) {
-                            content = "${value.latitude} ${value.longitude}";
-                            debugPrint(content);
+                            getUserPosition();
                           });
-                        });
-                        }else{
+                          }else{
                           setState(() {
                             content = "Geolocation is disabled. Please enable it in you phone settings";
                           });
